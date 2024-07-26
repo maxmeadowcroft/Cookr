@@ -61,6 +61,7 @@ class SubscriptionService {
           cookedRecipes: user.cookedRecipes,
           hasPremium: 1,
           goals: user.goals,
+          hasSeenWelcome: user.hasSeenWelcome,
         );
         await _userDataDatabaseHelper.updateUserData(updatedUser);
       }
