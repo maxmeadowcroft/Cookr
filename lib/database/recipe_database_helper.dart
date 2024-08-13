@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'database_helper.dart';
+import 'user_data_database_helper.dart';
 
 class Recipe {
   final int? id;
@@ -64,6 +65,21 @@ class Recipe {
 class RecipeDatabaseHelper {
   Future<int> createRecipe(Recipe recipe) async {
     final db = await DatabaseHelper.instance.database;
+
+    // Check the number of saved recipes
+    final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM recipes'));
+
+    // Get the user's premium status
+    final userDataDatabaseHelper = UserDataDatabaseHelper();
+    final userData = await userDataDatabaseHelper.getUserData(1); // Replace with actual user ID
+    final hasPremium = userData?.hasPremium == 1;
+
+    // Limit saved recipes to 10 for non-premium users
+    if (!hasPremium && count! >= 10) {
+      // Delete the oldest recipe
+      await db.delete('recipes', where: 'id = (SELECT id FROM recipes ORDER BY id LIMIT 1)');
+    }
+
     return await db.insert('recipes', recipe.toMap());
   }
 
@@ -113,10 +129,16 @@ class RecipeDatabaseHelper {
 
   Future<int> deleteRecipe(int id) async {
     final db = await DatabaseHelper.instance.database;
+    await DatabaseHelper.instance.deleteRecipeFromPlans(id); // Delete recipe from meal plans
     return await db.delete(
       'recipes',
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<int> getRecipeCount() async {
+    final db = await DatabaseHelper.instance.database;
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM recipes'))!;
   }
 }

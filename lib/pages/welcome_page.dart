@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-import '../database/user_data_database_helper.dart';
-import 'swipe.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'onboarding_page.dart'; // Import the onboarding page
+import '../util/colors.dart'; // Ensure this import points to the correct file
+import '../components/primary_button.dart'; // Adjust the import path if necessary
+import '../services/subscriptions.dart'; // Import the SubscriptionService
 
 class WelcomePage extends StatelessWidget {
+  final SubscriptionService subscriptionService;
+
+  WelcomePage({required this.subscriptionService});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor, // Set the background color here
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -13,42 +21,52 @@ class WelcomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Welcome to Tasty Recipes!',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                'Welcome to',
+                style: GoogleFonts.encodeSans(
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w200,
+                    color: AppColors.textColor,
+                  ),
+                ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
               Text(
-                'Discover new and delicious recipes tailored to your preferences.',
+                'Cookr',
+                style: GoogleFonts.encodeSans(
+                  textStyle: TextStyle(
+                    fontSize: 80,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                  ),
+                ),
                 textAlign: TextAlign.center,
+              ),
+              Text(
+                'Thank you for downloading',
+                style: GoogleFonts.encodeSans(
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textColor,
+                  ),
+                ),
               ),
               SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () async {
-                  UserDataDatabaseHelper userDataDatabaseHelper = UserDataDatabaseHelper();
-                  UserData? userData = await userDataDatabaseHelper.getUserData(1); // Replace with actual user ID
-
-                  if (userData != null) {
-                    UserData updatedUser = UserData(
-                      id: userData.id,
-                      activityLevel: userData.activityLevel,
-                      seenRecipes: userData.seenRecipes,
-                      cookedRecipes: userData.cookedRecipes,
-                      hasPremium: userData.hasPremium,
-                      goals: userData.goals,
-                      hasSeenWelcome: 1,
-                    );
-
-                    await userDataDatabaseHelper.updateUserData(updatedUser);
-                  }
-
+              PrimaryButton(
+                text: 'Start Finding Recipes',
+                onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SwipePage()),
+                    MaterialPageRoute(
+                      builder: (context) => OnboardingPage(
+                        subscriptionService: subscriptionService,
+                      ),
+                    ),
                   );
                 },
-                child: Text('Get Started'),
               ),
+              SizedBox(height: 40)
             ],
           ),
         ),

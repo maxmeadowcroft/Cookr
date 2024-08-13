@@ -26,8 +26,7 @@ class TastyApi {
     ''');
   }
 
-  Future<Map<String, dynamic>> fetchRecipes({int from = 0, int size = 20, String tags = ''}) async {
-    final endpoint = 'recipes/list?from=$from&size=$size&tags=$tags';
+  Future<Map<String, dynamic>> fetchRecipes({required String endpoint}) async {
     final cachedData = await _getCachedData(endpoint);
     if (cachedData != null) {
       return cachedData;
@@ -52,10 +51,12 @@ class TastyApi {
 
   Future<Map<String, dynamic>> fetchRandomRecipes() async {
     final random = Random();
-    final int from = random.nextInt(8000);
+    final int from = random.nextInt(2333);
     const int size = 10;
+    const randomTag = 'under_30_minutes';
+    final endpoint = 'recipes/list?from=$from&size=$size&tags=$randomTag';
 
-    return fetchRecipes(from: from, size: size);
+    return fetchRecipes(endpoint: endpoint);
   }
 
   Future<void> _cacheData(String endpoint, Map<String, dynamic> data) async {
@@ -104,5 +105,31 @@ class TastyApi {
     }
 
     return null;
+  }
+
+  Future<void> deleteCachedRecipe(String endpoint, int recipeId) async {
+    final db = await DatabaseHelper.instance.database;
+    final cachedData = await db.query(
+      'api_cache',
+      where: 'endpoint = ?',
+      whereArgs: [endpoint],
+    );
+
+    if (cachedData.isNotEmpty) {
+      final data = jsonDecode(cachedData.first['response'] as String);
+      final recipes = data['results'] as List;
+
+      final updatedRecipes = recipes.where((recipe) => recipe['id'] != recipeId).toList();
+
+      if (updatedRecipes.isEmpty) {
+        await db.delete('api_cache', where: 'endpoint = ?', whereArgs: [endpoint]);
+      } else {
+        final updatedData = {
+          'results': updatedRecipes,
+          'other_data': data['other_data'], // Keep other fields intact
+        };
+        await _cacheData(endpoint, updatedData);
+      }
+    }
   }
 }

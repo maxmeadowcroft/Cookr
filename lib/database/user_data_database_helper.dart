@@ -3,6 +3,10 @@ import 'database_helper.dart';
 
 class UserData {
   final int? id;
+  final int weight;
+  final int height;
+  final int age;
+  final String gender;
   final int activityLevel;
   final int seenRecipes;
   final int cookedRecipes;
@@ -12,6 +16,10 @@ class UserData {
 
   UserData({
     this.id,
+    required this.weight,
+    required this.height,
+    required this.age,
+    required this.gender,
     required this.activityLevel,
     required this.seenRecipes,
     required this.cookedRecipes,
@@ -23,6 +31,10 @@ class UserData {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'weight': weight,
+      'height': height,
+      'age': age,
+      'gender': gender,
       'activity_level': activityLevel,
       'seen_recipes': seenRecipes,
       'cooked_recipes': cookedRecipes,
@@ -35,12 +47,44 @@ class UserData {
   static UserData fromMap(Map<String, dynamic> map) {
     return UserData(
       id: map['id'],
+      weight: map['weight'],
+      height: map['height'],
+      age: map['age'],
+      gender: map['gender'],
       activityLevel: map['activity_level'],
       seenRecipes: map['seen_recipes'],
       cookedRecipes: map['cooked_recipes'],
       hasPremium: map['has_premium'],
       goals: map['goals'],
       hasSeenWelcome: map['has_seen_welcome'],
+    );
+  }
+
+  UserData copyWith({
+    int? id,
+    int? weight,
+    int? height,
+    int? age,
+    String? gender,
+    int? activityLevel,
+    int? seenRecipes,
+    int? cookedRecipes,
+    int? hasPremium,
+    int? goals,
+    int? hasSeenWelcome,
+  }) {
+    return UserData(
+      id: id ?? this.id,
+      weight: weight ?? this.weight,
+      height: height ?? this.height,
+      age: age ?? this.age,
+      gender: gender ?? this.gender,
+      activityLevel: activityLevel ?? this.activityLevel,
+      seenRecipes: seenRecipes ?? this.seenRecipes,
+      cookedRecipes: cookedRecipes ?? this.cookedRecipes,
+      hasPremium: hasPremium ?? this.hasPremium,
+      goals: goals ?? this.goals,
+      hasSeenWelcome: hasSeenWelcome ?? this.hasSeenWelcome,
     );
   }
 }
@@ -57,6 +101,10 @@ class UserDataDatabaseHelper {
       'user_data',
       columns: [
         'id',
+        'weight',
+        'height',
+        'age',
+        'gender',
         'activity_level',
         'seen_recipes',
         'cooked_recipes',

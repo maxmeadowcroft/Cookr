@@ -56,6 +56,10 @@ class SubscriptionService {
       if (user != null) {
         final updatedUser = UserData(
           id: user.id,
+          weight: user.weight, // Add missing fields
+          height: user.height, // Add missing fields
+          age: user.age, // Add missing fields
+          gender: user.gender, // Add missing fields
           activityLevel: user.activityLevel,
           seenRecipes: user.seenRecipes,
           cookedRecipes: user.cookedRecipes,
