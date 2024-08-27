@@ -109,7 +109,7 @@ class _PlanPageState extends State<PlanPage> {
     final macros = {
       'calories': recipe.calories,
       'protein': recipe.protein,
-      'fat': recipe.fats,
+      'fats': recipe.fats,
       'carbohydrates': recipe.carbs,
     };
 
@@ -260,15 +260,23 @@ class _PlanPageState extends State<PlanPage> {
                 final dbHelper = DatabaseHelper.instance;
                 final currentMacros = await dbHelper.getLast10DaysData();
                 final selectedDate = DateTime.now();
-                final currentEntry = currentMacros.firstWhere(
+
+                // Get the first entry matching today's date or create a default entry
+                final Map<String, dynamic> currentEntry = currentMacros.firstWhere(
                       (entry) => entry['date'] == DateFormat('yyyy-MM-dd').format(selectedDate),
-                  orElse: () => {},
+                  orElse: () => {
+                    'calories': 0,
+                    'protein': 0,
+                    'fats': 0,
+                    'carbohydrates': 0,
+                  },
                 );
+
                 final updatedMacros = {
-                  'calories': (currentEntry['calories'] ?? 0) + (macros['calories']! * servings),
-                  'protein': (currentEntry['protein'] ?? 0) + (macros['protein']! * servings),
-                  'fats': (currentEntry['fat'] ?? 0) + (macros['fat']! * servings),
-                  'carbs': (currentEntry['carbohydrates'] ?? 0) + (macros['carbohydrates']! * servings),
+                  'calories': (currentEntry['calories'] ?? 0) + ((macros['calories'] ?? 0) * servings),
+                  'protein': (currentEntry['protein'] ?? 0) + ((macros['protein'] ?? 0) * servings),
+                  'fats': (currentEntry['fats'] ?? 0) + ((macros['fats'] ?? 0) * servings),
+                  'carbohydrates': (currentEntry['carbohydrates'] ?? 0) + ((macros['carbohydrates'] ?? 0) * servings),
                 };
 
                 await dbHelper.logMacros(
@@ -279,6 +287,7 @@ class _PlanPageState extends State<PlanPage> {
                   updatedMacros['carbohydrates']!,
                 );
                 Navigator.of(context).pop();
+                _calculateTotalMacros();  // Recalculate macros after logging
               },
             ),
           ],

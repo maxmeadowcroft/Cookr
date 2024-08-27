@@ -313,7 +313,7 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
       description: recipe['description'] ?? 'No description available.',
       protein: recipe['nutrition']?['protein'] ?? 0,
       calories: recipe['nutrition']?['calories'] ?? 0,
-      fats: recipe['nutrition']?['fat'] ?? 0,
+      fats: recipe['nutrition']?['fat'] ?? 0,  // Ensure this matches 'fats' in the rest of the code
       carbs: recipe['nutrition']?['carbohydrates'] ?? 0,
       servings: recipe['num_servings'] ?? 1,
       ingredients: ingredients ?? [],
@@ -534,22 +534,30 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
                 final selectedDate = DateTime.now();
                 final currentEntry = currentMacros.firstWhere(
                       (entry) => entry['date'] == DateFormat('yyyy-MM-dd').format(selectedDate),
-                  orElse: () => {},
+                  orElse: () => {
+                    'calories': 0,
+                    'protein': 0,
+                    'fats': 0,
+                    'carbohydrates': 0,
+                  },
                 );
+
+
                 final updatedMacros = {
-                  'calories': (currentEntry['calories'] ?? 0) + (macros['calories']! * servings),
-                  'protein': (currentEntry['protein'] ?? 0) + (macros['protein']! * servings),
-                  'fats': (currentEntry['fat'] ?? 0) + (macros['fat']! * servings),
-                  'carbs': (currentEntry['carbohydrates'] ?? 0) + (macros['carbohydrates']! * servings),
+                  'calories': (currentEntry['calories'] ?? 0) + ((macros['calories'] ?? 0) * servings),
+                  'protein': (currentEntry['protein'] ?? 0) + ((macros['protein'] ?? 0) * servings),
+                  'fats': (currentEntry['fats'] ?? 0) + ((macros['fats'] ?? 0) * servings),  // Consistent key usage
+                  'carbohydrates': (currentEntry['carbohydrates'] ?? 0) + ((macros['carbohydrates'] ?? 0) * servings),
                 };
 
                 await dbHelper.logMacros(
                   selectedDate,
                   updatedMacros['calories']!,
                   updatedMacros['protein']!,
-                  updatedMacros['fats']!,
+                  updatedMacros['fats']!,  // Ensure this matches the database schema
                   updatedMacros['carbohydrates']!,
                 );
+
                 Navigator.of(context).pop();
               },
             ),
@@ -565,7 +573,7 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
     final macros = {
       'calories': (nutrition['calories'] ?? 0) as int,
       'protein': (nutrition['protein'] ?? 0) as int,
-      'fat': (nutrition['fat'] ?? 0) as int,
+      'fats': (nutrition['fat'] ?? 0) as int,
       'carbohydrates': (nutrition['carbohydrates'] ?? 0) as int,
     };
 
