@@ -98,7 +98,6 @@ class _PlanPageState extends State<PlanPage> {
 
   Future<void> _loadMealPlans() async {
     final mealPlanIds = await DatabaseHelper.instance.getMealPlan(_selectedDate);
-    print("Loaded Meal Plans for $_selectedDate: $mealPlanIds"); // Debug statement
 
     setState(() {
       _mealPlans = mealPlanIds;
@@ -301,11 +300,11 @@ class _PlanPageState extends State<PlanPage> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.only(top: 70, left: 16), // Adjust padding to position the button
+                padding: EdgeInsets.only(top: 70, left: 16),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back, size: 32), // Increase the size of the icon
+                    icon: Icon(Icons.arrow_back, size: 32),
                     color: AppColors.textColor,
                     onPressed: () {
                       Navigator.pop(context);
@@ -316,7 +315,7 @@ class _PlanPageState extends State<PlanPage> {
               Expanded(
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // 2 cards per row
+                    crossAxisCount: 2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                     childAspectRatio: 200 / 300,
@@ -363,18 +362,18 @@ class _PlanPageState extends State<PlanPage> {
                               maxValue = 100;
                               break;
                           }
-                          double progress = entry.value / maxValue; // Adjust progress calculation
+                          double progress = entry.value / maxValue;
                           return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 0.0), // Reduced vertical padding
+                            padding: const EdgeInsets.symmetric(vertical: 0.0),
                             child: index % 2 == 0
                                 ? ProgressBar(
                               progress: progress.clamp(0.0, 1.0),
-                              height: 15, // Slightly increased height of the progress bar
+                              height: 15,
                               width: 150,
                             )
                                 : SecondaryProgressBar(
                               progress: progress.clamp(0.0, 1.0),
-                              height: 15, // Slightly increased height of the secondary progress bar
+                              height: 15,
                               width: 150,
                             ),
                           );
@@ -400,8 +399,8 @@ class _PlanPageState extends State<PlanPage> {
   }
 
   Future<void> _promptForServings(String mealType, Recipe recipe) async {
-    Navigator.of(context).pop(); // Pop the context before showing the dialog
-    await Future.delayed(Duration(milliseconds: 200)); // Short delay to ensure the modal is closed
+    Navigator.of(context).pop();
+    await Future.delayed(Duration(milliseconds: 200));
 
     final TextEditingController servingsController = TextEditingController();
 
@@ -451,9 +450,7 @@ class _PlanPageState extends State<PlanPage> {
   }
 
   Future<void> _saveMealPlans() async {
-    print("Saving Meal Plans for $_selectedDate: $_mealPlans"); // Debug statement
     await DatabaseHelper.instance.saveMealPlan(_selectedDate, _mealPlans);
-    print("Meal Plans saved successfully"); // Debug statement
   }
 
   void _calculateTotalMacros() {
@@ -491,7 +488,6 @@ class _PlanPageState extends State<PlanPage> {
           color: AppColors.backgroundColor,
           child: CustomFullPageCalendar(
             onSelectedDates: (List<DateTime> selectedDates) {
-              // Get ingredients from the selected dates
               _getIngredientsForSelectedDates(selectedDates);
             },
           ),
@@ -575,7 +571,7 @@ class _PlanPageState extends State<PlanPage> {
                   title: "+",
                   titleSize: 64,
                   children: [],
-                  isAddButton: true, // Indicate this is the add button
+                  isAddButton: true,
                 ),
               ),
             ],
@@ -588,7 +584,7 @@ class _PlanPageState extends State<PlanPage> {
   Widget _buildMacroProgress(String name, String key, int goal, int consumed, bool usePrimary, [bool showUnit = false]) {
     final remaining = goal - consumed;
     final progress = (consumed / goal).clamp(0.0, 1.0);
-    final unit = showUnit ? 'g' : ''; // Unit to show if necessary
+    final unit = showUnit ? 'g' : '';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -609,7 +605,7 @@ class _PlanPageState extends State<PlanPage> {
         SizedBox(height: 8),
         LayoutBuilder(
           builder: (context, constraints) {
-            final width = constraints.maxWidth; // Use 100% of the available width
+            final width = constraints.maxWidth;
             return usePrimary
                 ? ProgressBar(
               progress: progress,
@@ -743,10 +739,23 @@ class _PlanPageState extends State<PlanPage> {
   }
 }
 
-class IngredientsPage extends StatelessWidget {
+class IngredientsPage extends StatefulWidget {
   final List<String> ingredients;
 
   IngredientsPage({required this.ingredients});
+
+  @override
+  _IngredientsPageState createState() => _IngredientsPageState();
+}
+
+class _IngredientsPageState extends State<IngredientsPage> {
+  late List<bool> _completedIngredients;
+
+  @override
+  void initState() {
+    super.initState();
+    _completedIngredients = List<bool>.filled(widget.ingredients.length, false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -778,14 +787,16 @@ class IngredientsPage extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.all(0), // Remove default padding
-                itemCount: ingredients.length,
+                padding: EdgeInsets.all(0),
+                itemCount: widget.ingredients.length,
                 itemBuilder: (context, index) {
                   return TodoItem(
-                    title: ingredients[index],
-                    isCompleted: false,
+                    title: widget.ingredients[index],
+                    isCompleted: _completedIngredients[index],
                     onToggle: () {
-                      // Implement toggle functionality if needed
+                      setState(() {
+                        _completedIngredients[index] = !_completedIngredients[index];
+                      });
                     },
                   );
                 },
@@ -795,7 +806,7 @@ class IngredientsPage extends StatelessWidget {
             PrimaryButton(
               text: 'Copy List',
               onPressed: () {
-                String todoListText = ingredients.join(', ');
+                String todoListText = widget.ingredients.join(', ');
                 _copyToClipboard(context, todoListText);
               },
             ),
