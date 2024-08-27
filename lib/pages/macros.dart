@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:fl_chart/fl_chart.dart';
 import '../components/primary_progress_bar.dart';
 import '../components/secondary_progress_bar.dart';
-import '../components/secondary_button.dart';
 import '../components/primary_button.dart';
 import '../util/colors.dart';
 import '../database/user_data_database_helper.dart';
 import '../database/database_helper.dart';
 import '../services/macro_calculator_service.dart';
-import '../components/custom_graph.dart'; // Import ChartComponent
 
 class MacrosPage extends StatefulWidget {
   final Function? onRefresh;
@@ -30,16 +27,12 @@ class MacrosPageState extends State<MacrosPage> {
     'carbs': 0,
   };
   DateTime _selectedDate = DateTime.now();
-  List<FlSpot> _weightData = [];
-  List<String> _weekDays = [];
 
   @override
   void initState() {
     super.initState();
     fetchGoalsAndConsumed();
     _resetOldestEntry();
-    _fetchWeightData(); // Fetch weight data on init
-    _generateWeekDays();
   }
 
   Future<void> fetchGoalsAndConsumed() async {
@@ -65,32 +58,6 @@ class MacrosPageState extends State<MacrosPage> {
         _isLoading = false;
       });
     }
-  }
-
-  Future<void> _fetchWeightData() async {
-    final dbHelper = DatabaseHelper.instance;
-    final weightData = await dbHelper.getLast10DaysData();
-    final spots = weightData.asMap().entries.map((entry) {
-      int idx = entry.key;
-      double weight = entry.value['weight'] ?? 0.0;
-      return FlSpot(idx.toDouble(), weight);
-    }).toList();
-
-    setState(() {
-      _weightData = spots.reversed.toList(); // Reverse to show the latest day on the right
-    });
-  }
-
-  void _generateWeekDays() {
-    final now = DateTime.now();
-    final List<String> days = [];
-    for (int i = 6; i >= 0; i--) {
-      final day = now.subtract(Duration(days: i));
-      days.add(DateFormat.E().format(day));
-    }
-    setState(() {
-      _weekDays = days.reversed.toList(); // Reverse to match the weight data
-    });
   }
 
   Map<String, int> _extractConsumedMacros(List<Map<String, dynamic>> data, DateTime date) {
@@ -164,56 +131,6 @@ class MacrosPageState extends State<MacrosPage> {
                 );
                 Navigator.of(context).pop();
                 await fetchGoalsAndConsumed();
-                if (widget.onRefresh != null) widget.onRefresh!(); // Call the callback if available
-              },
-            ),
-          ],
-          backgroundColor: AppColors.backgroundColor,
-        );
-      },
-    );
-  }
-
-  Future<void> _logWeight() async {
-    final TextEditingController weightController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            "Log Weight",
-            style: TextStyle(color: AppColors.textColor),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                TextField(
-                  controller: weightController,
-                  decoration: InputDecoration(labelText: "Weight", labelStyle: TextStyle(color: AppColors.textColor)),
-                  keyboardType: TextInputType.number,
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              child: Text("Cancel", style: TextStyle(color: AppColors.buttonColor)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text("Log", style: TextStyle(color: AppColors.buttonColor)),
-              onPressed: () async {
-                final dbHelper = DatabaseHelper.instance;
-                await dbHelper.logWeight(
-                  _selectedDate,
-                  double.tryParse(weightController.text) ?? 0.0,
-                );
-                Navigator.of(context).pop();
-                await fetchGoalsAndConsumed();
-                await _fetchWeightData(); // Fetch weight data after logging
                 if (widget.onRefresh != null) widget.onRefresh!(); // Call the callback if available
               },
             ),
@@ -327,34 +244,14 @@ class MacrosPageState extends State<MacrosPage> {
               _buildMacroProgress('Fats', 'fats', _goals['fats']!, _consumed['fats']!, true, true),
               _buildMacroProgress('Carbs', 'carbs', _goals['carbs']!, _consumed['carbs']!, false, true),
               SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SecondaryButton(
-                    text: 'Log Weight',
-                    onPressed: () {
-                      _logWeight();
-                    },
-                  ),
-                  PrimaryButton(
-                    text: 'Log Macros',
-                    onPressed: () {
-                      _logMacros();
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 40),
-              Text(
-                "Weight over past 7 days",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textColor,
+              Center(
+                child: PrimaryButton(
+                  text: 'Log Macros',
+                  onPressed: () {
+                    _logMacros();
+                  },
                 ),
               ),
-              SizedBox(height: 20),
-              ChartComponent(data: _weightData, weekDays: _weekDays), // Add ChartComponent below the buttons
             ],
           ),
         ),
