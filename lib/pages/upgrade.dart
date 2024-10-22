@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UpgradePage extends StatelessWidget {
+  const UpgradePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class UpgradePage extends StatelessWidget {
         title: Text(
           'Upgrade',
           style: GoogleFonts.encodeSans(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -20,7 +22,7 @@ class UpgradePage extends StatelessWidget {
         child: Text(
           'This is the Upgrade page.',
           style: GoogleFonts.encodeSans(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 16,
             ),
           ),

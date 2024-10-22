@@ -7,6 +7,8 @@ import '../components/primary_button.dart';
 import 'edit_account.dart';
 
 class AccountPage extends StatefulWidget {
+  const AccountPage({super.key});
+
   @override
   _AccountPageState createState() => _AccountPageState();
 }
@@ -43,11 +45,11 @@ class _AccountPageState extends State<AccountPage> {
         future: _userDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData) {
-            return Center(child: Text('No user data found.'));
+            return const Center(child: Text('No user data found.'));
           } else {
             final userData = snapshot.data!;
             final heightFeetInches = _convertCmToFeetInches(userData.height);
@@ -58,11 +60,11 @@ class _AccountPageState extends State<AccountPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 100),
+                    const SizedBox(height: 100),
                     Text(
                       'Account',
                       style: GoogleFonts.encodeSans(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           fontSize: 64,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textColor,
@@ -70,23 +72,23 @@ class _AccountPageState extends State<AccountPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     _buildInfoRow('Weight:', '${userData.weight} lbs'),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildInfoRow('Height:', heightFeetInches),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildInfoRow('Age:', '${userData.age} years'),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildInfoRow('Gender:', userData.gender),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildInfoRow('Activity Level:', _activityLevelToString(userData.activityLevel)),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildInfoRow('Goal:', _goalToString(userData.goals)),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildInfoRow('Recipes Seen:', '${userData.seenRecipes}'),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildInfoRow('Recipes Cooked:', '${userData.cookedRecipes}'),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     SecondaryButton(
                       text: 'Edit',
                       onPressed: () {
@@ -101,7 +103,7 @@ class _AccountPageState extends State<AccountPage> {
                         );
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     PrimaryButton(
                       text: userData.hasPremium == 1 ? 'Downgrade from Premium' : 'Upgrade to Premium',
                       onPressed: _togglePremiumStatus,
@@ -127,7 +129,7 @@ class _AccountPageState extends State<AccountPage> {
     return RichText(
       text: TextSpan(
         style: GoogleFonts.encodeSans(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 20,
             color: AppColors.textColor,
           ),
@@ -135,11 +137,11 @@ class _AccountPageState extends State<AccountPage> {
         children: [
           TextSpan(
             text: label,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           TextSpan(
             text: ' $value',
-            style: TextStyle(fontWeight: FontWeight.normal),
+            style: const TextStyle(fontWeight: FontWeight.normal),
           ),
         ],
       ),

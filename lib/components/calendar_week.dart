@@ -33,13 +33,13 @@ class _CustomCalendarWeekState extends State<CustomCalendarWeek> {
 
   void _selectPreviousWeek() {
     setState(() {
-      _currentStartDate = _currentStartDate.subtract(Duration(days: 7));
+      _currentStartDate = _currentStartDate.subtract(const Duration(days: 7));
     });
   }
 
   void _selectNextWeek() {
     setState(() {
-      _currentStartDate = _currentStartDate.add(Duration(days: 7));
+      _currentStartDate = _currentStartDate.add(const Duration(days: 7));
     });
   }
 
@@ -53,7 +53,7 @@ class _CustomCalendarWeekState extends State<CustomCalendarWeek> {
         widget.onDateSelected(date);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.buttonColor : Colors.transparent,
           borderRadius: BorderRadius.circular(20.0),
@@ -81,7 +81,7 @@ class _CustomCalendarWeekState extends State<CustomCalendarWeek> {
         Row(
           children: [
             IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: _currentStartDate.isAfter(widget.startDate) ? _selectPreviousWeek : null,
             ),
             Expanded(
@@ -91,7 +91,7 @@ class _CustomCalendarWeekState extends State<CustomCalendarWeek> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(7, (index) {
                     DateTime date = _currentStartDate.add(Duration(days: index));
-                    return (date.isAfter(widget.startDate.subtract(Duration(days: 1))) && date.isBefore(widget.endDate.add(Duration(days: 1))))
+                    return (date.isAfter(widget.startDate.subtract(const Duration(days: 1))) && date.isBefore(widget.endDate.add(const Duration(days: 1))))
                         ? _buildDateButton(date)
                         : Container();
                   }),
@@ -99,8 +99,8 @@ class _CustomCalendarWeekState extends State<CustomCalendarWeek> {
               ),
             ),
             IconButton(
-              icon: Icon(Icons.arrow_forward),
-              onPressed: _currentStartDate.isBefore(widget.endDate.subtract(Duration(days: 6))) ? _selectNextWeek : null,
+              icon: const Icon(Icons.arrow_forward),
+              onPressed: _currentStartDate.isBefore(widget.endDate.subtract(const Duration(days: 6))) ? _selectNextWeek : null,
             ),
           ],
         ),

@@ -13,9 +13,7 @@ class DatabaseHelper {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    if (_databasePath == null) {
-      _databasePath = join(await getDatabasesPath(), 'cookr2_database.db');
-    }
+    _databasePath ??= join(await getDatabasesPath(), 'cookr2_database.db');
 
     _database = await _initDB(_databasePath!);
     return _database!;

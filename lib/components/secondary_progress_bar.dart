@@ -36,12 +36,12 @@ class SecondaryProgressBar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.secondaryButtonColor, // Adjust color as needed
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8.0),
-                  bottomLeft: Radius.circular(8.0),
-                  topRight: progress == 1.0 ? Radius.circular(8.0) : Radius.zero,
-                  bottomRight: progress == 1.0 ? Radius.circular(8.0) : Radius.zero,
+                  topLeft: const Radius.circular(8.0),
+                  bottomLeft: const Radius.circular(8.0),
+                  topRight: progress == 1.0 ? const Radius.circular(8.0) : Radius.zero,
+                  bottomRight: progress == 1.0 ? const Radius.circular(8.0) : Radius.zero,
                 ),
-                border: progress == 1.0 ? null : Border(
+                border: progress == 1.0 ? null : const Border(
                   right: BorderSide(color: Colors.black, width: 2.0), // Border for the right side of the progress fill only if not full
                 ),
               ),

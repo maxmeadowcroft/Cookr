@@ -8,7 +8,7 @@ import '../services/subscriptions.dart'; // Import the SubscriptionService
 class WelcomePage extends StatelessWidget {
   final SubscriptionService subscriptionService;
 
-  WelcomePage({required this.subscriptionService});
+  const WelcomePage({super.key, required this.subscriptionService});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class WelcomePage extends StatelessWidget {
               Text(
                 'Welcome to',
                 style: GoogleFonts.encodeSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w200,
                     color: AppColors.textColor,
@@ -34,7 +34,7 @@ class WelcomePage extends StatelessWidget {
               Text(
                 'Cookr',
                 style: GoogleFonts.encodeSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 80,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textColor,
@@ -45,14 +45,14 @@ class WelcomePage extends StatelessWidget {
               Text(
                 'Thank you for downloading',
                 style: GoogleFonts.encodeSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     color: AppColors.textColor,
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               PrimaryButton(
                 text: 'Start Finding Recipes',
                 onPressed: () {
@@ -66,7 +66,7 @@ class WelcomePage extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 40)
+              const SizedBox(height: 40)
             ],
           ),
         ),

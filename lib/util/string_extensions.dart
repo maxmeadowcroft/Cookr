@@ -5,6 +5,6 @@ extension StringExtension on String {
   }
 
   String truncateWithEllipsis(int maxLength) {
-    return (this.length <= maxLength) ? this : '${this.substring(0, maxLength)}...';
+    return (length <= maxLength) ? this : '${substring(0, maxLength)}...';
   }
 }

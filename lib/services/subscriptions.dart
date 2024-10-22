@@ -22,8 +22,8 @@ class SubscriptionService {
       return;
     }
 
-    const Set<String> _kIds = <String>{_premiumSubscriptionId};
-    final ProductDetailsResponse response = await _inAppPurchase.queryProductDetails(_kIds);
+    const Set<String> kIds = <String>{_premiumSubscriptionId};
+    final ProductDetailsResponse response = await _inAppPurchase.queryProductDetails(kIds);
     if (response.notFoundIDs.isNotEmpty) {
       // Handle the error
       return;
@@ -51,7 +51,7 @@ class SubscriptionService {
 
   Future<void> _handlePurchase(PurchaseDetails purchaseDetails) async {
     if (purchaseDetails.productID == _premiumSubscriptionId) {
-      final userId = 1; // Replace with the actual user ID
+      const userId = 1; // Replace with the actual user ID
       final user = await _userDataDatabaseHelper.getUserData(userId);
       if (user != null) {
         final updatedUser = UserData(

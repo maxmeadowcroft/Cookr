@@ -39,7 +39,7 @@ class CustomCard extends StatelessWidget {
         margin: const EdgeInsets.all(8.0), // Adjusted to make cards slightly shorter
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
-          side: BorderSide(color: Colors.black, width: 4), // Black border
+          side: const BorderSide(color: Colors.black, width: 4), // Black border
         ),
         child: Container(
           width: width,

@@ -11,7 +11,7 @@ import '../services/macro_calculator_service.dart';
 
 class MacrosPage extends StatefulWidget {
   final Function? onRefresh;
-  MacrosPage({Key? key, this.onRefresh}) : super(key: key);
+  const MacrosPage({super.key, this.onRefresh});
 
   @override
   MacrosPageState createState() => MacrosPageState();
@@ -81,7 +81,7 @@ class MacrosPageState extends State<MacrosPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
+          title: const Text(
             "Log Macros",
             style: TextStyle(color: AppColors.textColor),
           ),
@@ -90,22 +90,22 @@ class MacrosPageState extends State<MacrosPage> {
               children: [
                 TextField(
                   controller: caloriesController,
-                  decoration: InputDecoration(labelText: "Calories", labelStyle: TextStyle(color: AppColors.textColor)),
+                  decoration: const InputDecoration(labelText: "Calories", labelStyle: TextStyle(color: AppColors.textColor)),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: proteinController,
-                  decoration: InputDecoration(labelText: "Protein", labelStyle: TextStyle(color: AppColors.textColor)),
+                  decoration: const InputDecoration(labelText: "Protein", labelStyle: TextStyle(color: AppColors.textColor)),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: fatsController,
-                  decoration: InputDecoration(labelText: "Fats", labelStyle: TextStyle(color: AppColors.textColor)),
+                  decoration: const InputDecoration(labelText: "Fats", labelStyle: TextStyle(color: AppColors.textColor)),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: carbsController,
-                  decoration: InputDecoration(labelText: "Carbs", labelStyle: TextStyle(color: AppColors.textColor)),
+                  decoration: const InputDecoration(labelText: "Carbs", labelStyle: TextStyle(color: AppColors.textColor)),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -113,13 +113,13 @@ class MacrosPageState extends State<MacrosPage> {
           ),
           actions: [
             TextButton(
-              child: Text("Cancel", style: TextStyle(color: AppColors.buttonColor)),
+              child: const Text("Cancel", style: TextStyle(color: AppColors.buttonColor)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("Log", style: TextStyle(color: AppColors.buttonColor)),
+              child: const Text("Log", style: TextStyle(color: AppColors.buttonColor)),
               onPressed: () async {
                 final dbHelper = DatabaseHelper.instance;
                 await dbHelper.logMacros(
@@ -150,12 +150,12 @@ class MacrosPageState extends State<MacrosPage> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime.now().subtract(Duration(days: 10)),
+      firstDate: DateTime.now().subtract(const Duration(days: 10)),
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: AppColors.buttonColor,
               onPrimary: Colors.white,
               surface: AppColors.backgroundColor,
@@ -180,14 +180,14 @@ class MacrosPageState extends State<MacrosPage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,7 +195,7 @@ class MacrosPageState extends State<MacrosPage> {
                     Text(
                       'Macros',
                       style: GoogleFonts.encodeSans(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           fontSize: 64,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textColor,
@@ -205,7 +205,7 @@ class MacrosPageState extends State<MacrosPage> {
                     GestureDetector(
                       onTap: () => _selectDate(context),
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
                         decoration: BoxDecoration(
                           color: AppColors.buttonColor,
                           borderRadius: BorderRadius.circular(30.0), // High border radius for oval shape
@@ -217,18 +217,18 @@ class MacrosPageState extends State<MacrosPage> {
                               padding: const EdgeInsets.only(bottom: 4.0),
                               child: Text(
                                 DateFormat.E().format(_selectedDate),
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0), // Adjusted padding for top and bottom
+                              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0), // Adjusted padding for top and bottom
                               decoration: BoxDecoration(
                                 color: AppColors.buttonColor,
                                 borderRadius: BorderRadius.circular(30.0),
                               ),
                               child: Text(
                                 DateFormat.d().format(_selectedDate),
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ),
                           ],
@@ -238,12 +238,12 @@ class MacrosPageState extends State<MacrosPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildMacroProgress('Calories', 'calories', _goals['calories']!, _consumed['calories']!, true),
               _buildMacroProgress('Protein', 'protein', _goals['protein']!, _consumed['protein']!, false, true),
               _buildMacroProgress('Fats', 'fats', _goals['fats']!, _consumed['fats']!, true, true),
               _buildMacroProgress('Carbs', 'carbs', _goals['carbs']!, _consumed['carbs']!, false, true),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
                 child: PrimaryButton(
                   text: 'Log Macros',
@@ -272,15 +272,15 @@ class MacrosPageState extends State<MacrosPage> {
           children: [
             Text(
               '$name: $consumed$unit',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             Text(
               'Remaining: $remaining$unit',
-              style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+              style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
             ),
           ],
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         LayoutBuilder(
           builder: (context, constraints) {
             final width = constraints.maxWidth; // Use 100% of the available width
@@ -297,7 +297,7 @@ class MacrosPageState extends State<MacrosPage> {
             );
           },
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

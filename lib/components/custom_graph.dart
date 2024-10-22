@@ -7,7 +7,7 @@ class ChartComponent extends StatelessWidget {
   final List<FlSpot> data;
   final List<String> weekDays;
 
-  ChartComponent({Key? key, required this.data, required this.weekDays}) : super(key: key);
+  const ChartComponent({super.key, required this.data, required this.weekDays});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ChartComponent extends StatelessWidget {
           LineChartData(
             borderData: FlBorderData(show: false),
             titlesData: FlTitlesData(
-              leftTitles: AxisTitles(
+              leftTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: true),
               ),
               bottomTitles: AxisTitles(
@@ -79,7 +79,7 @@ class FullScreenChart extends StatelessWidget {
   final List<FlSpot> data;
   final List<String> weekDays;
 
-  const FullScreenChart({Key? key, required this.data, required this.weekDays}) : super(key: key);
+  const FullScreenChart({super.key, required this.data, required this.weekDays});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,7 @@ class FullScreenChart extends StatelessWidget {
           LineChartData(
             borderData: FlBorderData(show: false),
             titlesData: FlTitlesData(
-              leftTitles: AxisTitles(
+              leftTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: true),
               ),
               bottomTitles: AxisTitles(

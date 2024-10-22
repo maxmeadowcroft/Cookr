@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   final bool hasSeenWelcome;
   final SubscriptionService subscriptionService;
 
-  MyApp({required this.hasSeenWelcome, required this.subscriptionService});
+  const MyApp({super.key, required this.hasSeenWelcome, required this.subscriptionService});
 
   @override
   Widget build(BuildContext context) {

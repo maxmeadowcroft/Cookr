@@ -24,7 +24,7 @@ class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.all(0), // Remove default padding
+      padding: const EdgeInsets.all(0), // Remove default padding
       itemCount: _todos.length,
       itemBuilder: (context, index) {
         final todo = _todos[index];

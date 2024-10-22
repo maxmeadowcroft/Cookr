@@ -16,7 +16,6 @@ import '../services/tasty_api.dart';
 import '../components/expanded_card.dart';
 import '../components/primary_button.dart';
 import '../components/secondary_button.dart';
-import '../components/third_button.dart';
 import '../components/popup.dart';
 import '../database/database_helper.dart';
 import '../database/recipe_database_helper.dart';
@@ -48,7 +47,7 @@ class _SwipePageState extends State<SwipePage> with AutomaticKeepAliveClientMixi
     _pages.add(SavedPage(key: _savedPageKey, refreshCallback: _refreshSavedPage));
     _pages.add(PlanPage(subscriptionService: widget.subscriptionService)); // Pass the subscriptionService here
     _pages.add(MacrosPage(key: _macrosPageKey));
-    _pages.add(AccountPage());
+    _pages.add(const AccountPage());
     _fetchGoals();
   }
 
@@ -102,7 +101,7 @@ class _SwipePageState extends State<SwipePage> with AutomaticKeepAliveClientMixi
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex,
-        icons: [
+        icons: const [
           Icons.swipe,
           Icons.save,
           Icons.calendar_month,
@@ -123,14 +122,14 @@ class SwipeContentPage extends StatefulWidget {
   final Map<String, int> goals;
   final SubscriptionService subscriptionService;
 
-  SwipeContentPage({required this.goals, required this.subscriptionService});
+  const SwipeContentPage({super.key, required this.goals, required this.subscriptionService});
 
   @override
   _SwipeContentPageState createState() => _SwipeContentPageState();
 }
 
 class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepAliveClientMixin {
-  List<SwipeItem> _swipeItems = [];
+  final List<SwipeItem> _swipeItems = [];
   late MatchEngine _matchEngine;
   bool _isLoading = true;
   bool _showingReplacementDialog = false;
@@ -202,13 +201,13 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
                                   flex: 2,
                                   child: Text(
                                     '${key.capitalize()}: ${entry.value}$unit',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 Expanded(
                                   flex: 3,
                                   child: index % 2 == 0
@@ -228,9 +227,9 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
                           },
                         ),
                       );
-                    }).toList(),
-                    SizedBox(height: 10),
-                    Text(
+                    }),
+                    const SizedBox(height: 10),
+                    const Text(
                       'Macros per serving',
                       style: TextStyle(
                         fontSize: 14,
@@ -242,7 +241,7 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
                 )
               ]
                   : [
-                Text(
+                const Text(
                   'Macros are not available for this recipe.',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
@@ -339,11 +338,11 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.only(top: 70, left: 16),
+                padding: const EdgeInsets.only(top: 70, left: 16),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back, size: 32),
+                    icon: const Icon(Icons.arrow_back, size: 32),
                     color: AppColors.textColor,
                     onPressed: () {
                       Navigator.pop(context);
@@ -357,7 +356,7 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Oops, it\'s a match?',
                       style: TextStyle(
                         fontSize: 24,
@@ -365,40 +364,40 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
                         color: AppColors.textColor,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
                       'Your saved page is full for your current plan, subscribe to Cookr premium to get unlimited saves, access to the meal planning page, and no ads (it\'s only \$4.99 a month, and you can cancel any time).',
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.textColor,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     PrimaryButton(
                       text: 'Upgrade',
                       onPressed: _handleUpgrade,
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'Or you can replace your already saved recipes below (just choose one to replace):',
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.textColor,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                     childAspectRatio: 200 / 300,
                   ),
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   itemCount: savedRecipes.length,
                   itemBuilder: (context, index) {
                     final recipe = savedRecipes[index];
@@ -462,7 +461,7 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
                           );
                         }).toList()
                             : [
-                          Text(
+                          const Text(
                             'Macros are not available for this recipe.',
                             style: TextStyle(
                               fontStyle: FontStyle.italic,
@@ -503,7 +502,7 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
+          title: const Text(
             "Log Meal",
             style: TextStyle(color: AppColors.textColor),
           ),
@@ -512,7 +511,7 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
               children: [
                 TextField(
                   controller: servingsController,
-                  decoration: InputDecoration(labelText: "How many servings did you eat?", labelStyle: TextStyle(color: AppColors.textColor)),
+                  decoration: const InputDecoration(labelText: "How many servings did you eat?", labelStyle: TextStyle(color: AppColors.textColor)),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -520,13 +519,13 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
           ),
           actions: [
             TextButton(
-              child: Text("Cancel", style: TextStyle(color: AppColors.buttonColor)),
+              child: const Text("Cancel", style: TextStyle(color: AppColors.buttonColor)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("Log", style: TextStyle(color: AppColors.buttonColor)),
+              child: const Text("Log", style: TextStyle(color: AppColors.buttonColor)),
               onPressed: () async {
                 final int servings = int.tryParse(servingsController.text) ?? 1;
                 final dbHelper = DatabaseHelper.instance;
@@ -583,76 +582,6 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
       builder: (context) {
         return SlidingPanel(
           imageUrl: recipe['thumbnail_url'] ?? 'https://via.placeholder.com/300',
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  recipe['name'] ?? 'Unknown',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  '${recipe['num_servings'] ?? 'N/A'} servings',
-                  style: TextStyle(fontSize: 16),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  macros.entries.map((e) => '${e.key.capitalize()}: ${e.value}g').join(' | '),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  recipe['description'] ?? 'No description available.',
-                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Ingredients:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ((recipe['sections'] as List<dynamic>?)?.expand<Widget>((section) {
-                    return (section['components'] as List<dynamic>?)?.map<Widget>((component) {
-                      final ingredientName = component['ingredient']['name'];
-                      final measurements = component['measurements'];
-                      if (measurements != null && measurements.isNotEmpty) {
-                        final quantity = measurements[0]['quantity'];
-                        final unit = measurements[0]['unit']['abbreviation'];
-                        return Text(
-                          quantity == '0' || quantity == null
-                              ? '- $ingredientName'
-                              : '- $ingredientName: $quantity $unit',
-                          style: TextStyle(fontSize: 16),
-                        );
-                      } else {
-                        return Text(
-                          '- $ingredientName',
-                          style: TextStyle(fontSize: 16),
-                        );
-                      }
-                    }).toList() ?? [];
-                  }).toList() ?? []),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Instructions:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ((recipe['instructions'] as List<dynamic>?)?.map<Widget>((instruction) {
-                    return Text(
-                      '- ${instruction['display_text']}',
-                      style: TextStyle(fontSize: 16),
-                    );
-                  }).toList() ?? []),
-                ),
-                SizedBox(height: 20),
-              ],
-            ),
-          ],
           bottomComponent: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -670,6 +599,76 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
               ),
             ],
           ),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  recipe['name'] ?? 'Unknown',
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '${recipe['num_servings'] ?? 'N/A'} servings',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  macros.entries.map((e) => '${e.key.capitalize()}: ${e.value}g').join(' | '),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  recipe['description'] ?? 'No description available.',
+                  style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Ingredients:',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: ((recipe['sections'] as List<dynamic>?)?.expand<Widget>((section) {
+                    return (section['components'] as List<dynamic>?)?.map<Widget>((component) {
+                      final ingredientName = component['ingredient']['name'];
+                      final measurements = component['measurements'];
+                      if (measurements != null && measurements.isNotEmpty) {
+                        final quantity = measurements[0]['quantity'];
+                        final unit = measurements[0]['unit']['abbreviation'];
+                        return Text(
+                          quantity == '0' || quantity == null
+                              ? '- $ingredientName'
+                              : '- $ingredientName: $quantity $unit',
+                          style: const TextStyle(fontSize: 16),
+                        );
+                      } else {
+                        return Text(
+                          '- $ingredientName',
+                          style: const TextStyle(fontSize: 16),
+                        );
+                      }
+                    }).toList() ?? [];
+                  }).toList() ?? []),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Instructions:',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: ((recipe['instructions'] as List<dynamic>?)?.map<Widget>((instruction) {
+                    return Text(
+                      '- ${instruction['display_text']}',
+                      style: const TextStyle(fontSize: 16),
+                    );
+                  }).toList() ?? []),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ],
         );
       },
     );
@@ -682,14 +681,6 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
         return PopupDialog(
           title: "It's a Match!",
           content: "This recipe has been added to your saved section for you to view at any time.",
-          children: [
-            Image.network(
-              recipe['thumbnail_url'] ?? 'https://via.placeholder.com/300',
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(height: 20),
-          ],
           actions: [
             Center(
               child: Row(
@@ -709,6 +700,14 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
               ),
             ),
           ],
+          children: [
+            Image.network(
+              recipe['thumbnail_url'] ?? 'https://via.placeholder.com/300',
+              height: 150,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(height: 20),
+          ],
         );
       },
     );
@@ -721,23 +720,23 @@ class _SwipeContentPageState extends State<SwipeContentPage> with AutomaticKeepA
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           Text(
             'Swipe',
             style: GoogleFonts.encodeSans(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 64,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textColor,
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _isLoading
-              ? CircularProgressIndicator(
+              ? const CircularProgressIndicator(
             color: AppColors.buttonColor,
           )
-              : Container(
+              : SizedBox(
             width: 400,
             height: 600,
             child: SwipeCards(

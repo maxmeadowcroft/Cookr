@@ -31,7 +31,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width,
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       decoration: BoxDecoration(
         color: Colors.transparent,
         border: Border.all(color: Colors.black, width: 2.0),
@@ -41,9 +41,9 @@ class _CustomDropdownState extends State<CustomDropdown> {
         child: DropdownButton<String>(
           value: _selectedValue,
           isExpanded: true,
-          icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
           iconSize: 24,
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
           dropdownColor: Colors.white, // Background color of dropdown items
           onChanged: (String? newValue) {
             setState(() {
@@ -56,7 +56,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
               value: value,
               child: Text(
                 value,
-                style: TextStyle(color: Colors.black), // Ensure black text
+                style: const TextStyle(color: Colors.black), // Ensure black text
               ),
             );
           }).toList(),

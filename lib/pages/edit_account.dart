@@ -9,10 +9,10 @@ class EditAccountPage extends StatefulWidget {
   final Function(UserData) onSave;
 
   const EditAccountPage({
-    Key? key,
+    super.key,
     required this.userData,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   _EditAccountPageState createState() => _EditAccountPageState();
@@ -75,7 +75,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
         title: Text(
           'Edit Account',
           style: GoogleFonts.encodeSans(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -90,7 +90,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
             children: [
               TextFormField(
                 initialValue: _weight.toString(),
-                decoration: InputDecoration(labelText: 'Weight (kg)'),
+                decoration: const InputDecoration(labelText: 'Weight (kg)'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -102,13 +102,13 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   _weight = int.parse(value!);
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
                     child: TextFormField(
                       initialValue: _heightFeet.toString(),
-                      decoration: InputDecoration(labelText: 'Height (ft)'),
+                      decoration: const InputDecoration(labelText: 'Height (ft)'),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -121,11 +121,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextFormField(
                       initialValue: _heightInches.toString(),
-                      decoration: InputDecoration(labelText: 'Height (in)'),
+                      decoration: const InputDecoration(labelText: 'Height (in)'),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -140,10 +140,10 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
                 initialValue: _age.toString(),
-                decoration: InputDecoration(labelText: 'Age'),
+                decoration: const InputDecoration(labelText: 'Age'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -155,11 +155,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   _age = int.parse(value!);
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: _gender,
-                decoration: InputDecoration(labelText: 'Gender'),
-                items: [
+                decoration: const InputDecoration(labelText: 'Gender'),
+                items: const [
                   DropdownMenuItem(value: 'male', child: Text('Male')),
                   DropdownMenuItem(value: 'female', child: Text('Female')),
                   DropdownMenuItem(value: 'other', child: Text('Other')),
@@ -171,11 +171,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 },
                 dropdownColor: AppColors.backgroundColor,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField<int>(
                 value: _activityLevel,
-                decoration: InputDecoration(labelText: 'Activity Level'),
-                items: [
+                decoration: const InputDecoration(labelText: 'Activity Level'),
+                items: const [
                   DropdownMenuItem(value: 0, child: Text('Sedentary')),
                   DropdownMenuItem(value: 1, child: Text('Lightly Active')),
                   DropdownMenuItem(value: 2, child: Text('Moderately Active')),
@@ -189,11 +189,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 },
                 dropdownColor: AppColors.backgroundColor,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField<int>(
                 value: _goal,
-                decoration: InputDecoration(labelText: 'Goal'),
-                items: [
+                decoration: const InputDecoration(labelText: 'Goal'),
+                items: const [
                   DropdownMenuItem(value: 0, child: Text('Lose Weight')),
                   DropdownMenuItem(value: 1, child: Text('Maintain Weight')),
                   DropdownMenuItem(value: 2, child: Text('Gain Muscle')),
@@ -205,7 +205,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 },
                 dropdownColor: AppColors.backgroundColor,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               PrimaryButton(
                 text: 'Save',
                 onPressed: _save,

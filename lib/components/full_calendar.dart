@@ -59,7 +59,7 @@ class _CustomFullPageCalendarState extends State<CustomFullPageCalendar> {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.backgroundColor,
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -67,19 +67,19 @@ class _CustomFullPageCalendarState extends State<CustomFullPageCalendar> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: _selectPreviousMonth,
               ),
               Expanded(
                 child: Center(
                   child: Text(
                     DateFormat.yMMMM().format(_currentMonth),
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.arrow_forward),
+                icon: const Icon(Icons.arrow_forward),
                 onPressed: _selectNextMonth,
               ),
             ],
@@ -98,7 +98,7 @@ class _CustomFullPageCalendarState extends State<CustomFullPageCalendar> {
                 return GestureDetector(
                   onTap: () => _onDateSelected(date),
                   child: Container(
-                    margin: EdgeInsets.all(4.0),
+                    margin: const EdgeInsets.all(4.0),
                     decoration: BoxDecoration(
                       color: isSelected ? AppColors.buttonColor : Colors.transparent,
                       borderRadius: BorderRadius.circular(10.0),
@@ -129,8 +129,8 @@ class _CustomFullPageCalendarState extends State<CustomFullPageCalendar> {
                 List<DateTime> selectedDates = [];
                 if (_selectedEndDate != null) {
                   for (DateTime date = _selectedStartDate;
-                  date.isBefore(_selectedEndDate!.add(Duration(days: 1)));
-                  date = date.add(Duration(days: 1))) {
+                  date.isBefore(_selectedEndDate!.add(const Duration(days: 1)));
+                  date = date.add(const Duration(days: 1))) {
                     selectedDates.add(date);
                   }
                 } else {

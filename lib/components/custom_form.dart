@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../util/colors.dart'; // Adjust the path if necessary
+// Adjust the path if necessary
 
 class CustomForm extends StatefulWidget {
   final VoidCallback onSubmit;
@@ -22,19 +22,19 @@ class _CustomFormState extends State<CustomForm> {
           TextFormField(
             decoration: InputDecoration(
               hintText: 'Enter your name',
-              hintStyle: TextStyle(color: Colors.grey), // Grey placeholder text
-              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+              hintStyle: const TextStyle(color: Colors.grey), // Grey placeholder text
+              contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.black, width: 2.0),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.black, width: 2.0),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.black, width: 2.0),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
             ),
           ),
@@ -42,26 +42,26 @@ class _CustomFormState extends State<CustomForm> {
           TextFormField(
             decoration: InputDecoration(
               hintText: 'Enter your email',
-              hintStyle: TextStyle(color: Colors.grey), // Grey placeholder text
-              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+              hintStyle: const TextStyle(color: Colors.grey), // Grey placeholder text
+              contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.black, width: 2.0),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.black, width: 2.0),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.black, width: 2.0),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
             ),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: widget.onSubmit,
-            child: Text('Submit'),
+            child: const Text('Submit'),
           ),
         ],
       ),

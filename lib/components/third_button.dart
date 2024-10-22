@@ -21,7 +21,7 @@ class ThirdButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10), // Rounded corners
-          side: BorderSide(color: AppColors.textColor, width: 2), // Black border
+          side: const BorderSide(color: AppColors.textColor, width: 2), // Black border
         ),
         textStyle: const TextStyle(
           fontSize: 20,

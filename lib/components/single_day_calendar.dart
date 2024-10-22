@@ -16,7 +16,7 @@ class SingleDayCalendarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
       decoration: BoxDecoration(
         color: isSelected ? AppColors.buttonColor : Colors.transparent,
         borderRadius: BorderRadius.circular(30.0), // High border radius for oval shape
@@ -32,7 +32,7 @@ class SingleDayCalendarIcon extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0), // Adjusted padding for top and bottom
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0), // Adjusted padding for top and bottom
             decoration: BoxDecoration(
               color: isSelected ? AppColors.buttonColor : Colors.transparent,
               borderRadius: BorderRadius.circular(30.0),

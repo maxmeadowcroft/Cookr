@@ -16,7 +16,7 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 4.0), // Adjust padding to reduce space between items
+      padding: const EdgeInsets.symmetric(vertical: 4.0), // Adjust padding to reduce space between items
       child: ListTile(
         contentPadding: EdgeInsets.zero, // Remove default padding
         leading: GestureDetector(
@@ -33,7 +33,7 @@ class TodoItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.0), // Adjust for rounded corners
             ),
             child: isCompleted
-                ? Icon(
+                ? const Icon(
               Icons.check,
               size: 24.0, // Adjust the size of the check icon
               color: Colors.white,

@@ -9,7 +9,7 @@ import '../services/subscriptions.dart'; // Import the SubscriptionService
 class OnboardingPage extends StatefulWidget {
   final SubscriptionService subscriptionService; // Add this line
 
-  OnboardingPage({required this.subscriptionService}); // Add this line
+  const OnboardingPage({super.key, required this.subscriptionService}); // Add this line
 
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
@@ -57,7 +57,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         title: Text(
           'Onboarding',
           style: GoogleFonts.encodeSans(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -71,7 +71,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: ListView(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Weight (kg)'),
+                decoration: const InputDecoration(labelText: 'Weight (lbs)'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -81,9 +81,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Height (cm)'),
+                decoration: const InputDecoration(labelText: 'Height (inches)'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -93,9 +93,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Age'),
+                decoration: const InputDecoration(labelText: 'Age'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -105,9 +105,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Gender'),
+                decoration: const InputDecoration(labelText: 'Gender'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your gender';
@@ -116,11 +116,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField<int>(
                 value: _activityLevel,
-                decoration: InputDecoration(labelText: 'Activity Level'),
-                items: [
+                decoration: const InputDecoration(labelText: 'Activity Level'),
+                items: const [
                   DropdownMenuItem(value: 0, child: Text('Not very active')),
                   DropdownMenuItem(value: 1, child: Text('Moderately active')),
                   DropdownMenuItem(value: 2, child: Text('Active')),
@@ -131,11 +131,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   });
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField<int>(
                 value: _goal,
-                decoration: InputDecoration(labelText: 'Goal'),
-                items: [
+                decoration: const InputDecoration(labelText: 'Goal'),
+                items: const [
                   DropdownMenuItem(value: 0, child: Text('Lose weight')),
                   DropdownMenuItem(value: 1, child: Text('Maintain weight')),
                   DropdownMenuItem(value: 2, child: Text('Gain muscle')),
@@ -146,7 +146,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   });
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               PrimaryButton(
                 text: 'Save',
                 onPressed: _saveUserData,
