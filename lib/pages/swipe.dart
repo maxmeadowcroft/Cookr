@@ -94,10 +94,12 @@ class _SwipePageState extends State<SwipePage> with AutomaticKeepAliveClientMixi
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
+      backgroundColor: AppColors.backgroundColor,  // Set the background color here
+      body: SingleChildScrollView(
+        child: IndexedStack(
+          index: _currentIndex,
+          children: _pages,
+        ),
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex,
@@ -113,6 +115,7 @@ class _SwipePageState extends State<SwipePage> with AutomaticKeepAliveClientMixi
       ),
     );
   }
+
 
   @override
   bool get wantKeepAlive => true;
